@@ -1,6 +1,5 @@
 {% set version = '1.0.6' %}
 {% set posix = 'm2-' if win else '' %}
-{% set native = 'm2w64-' if win else '' %}
 
 package:
   name: r-nhmmfdr
@@ -12,8 +11,7 @@ source:
   md5: 895809224cccfee3d2d6b4292c90baad
 
 build:
-  merge_build_host: True  # [win]
-  number: 1005
+  number: 1006
   rpaths:
     - lib/R/lib/
     - lib/
@@ -21,7 +19,9 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}              # [not win]
+    - {{ stdlib("c") }}                # [not win]
     - {{ compiler('m2w64_c') }}        # [win]
+    - {{ stdlib("m2w64_c") }}          # [win]
     - {{ posix }}filesystem        # [win]
     - {{ posix }}make
     - {{ posix }}sed               # [win]
@@ -34,7 +34,6 @@ requirements:
     - r-locfdr
   run:
     - r-base
-    - {{ native }}gcc-libs         # [win]
     - r-mass
     - r-locfdr
 
